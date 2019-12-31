@@ -19,12 +19,15 @@ public class BlackRedTree<K,V> {
 			return "Node{" +
 					"key=" + key +
 					", value=" + value +
-					", parent=" + parent +
-					", left=" + left +
-					", right=" + right +
+					", parent=" + ph(parent) +
+					", right=" + ph(right) +
+					", left=" + ph(left)+
 					", isBlack=" + isBlack +
 					", isLeft=" + isLeft +
 					'}';
+		}
+		private K ph(Node<K,V> node) {
+			return node == null? null : node.key;
 		}
 	}
 
@@ -51,7 +54,7 @@ public class BlackRedTree<K,V> {
 				size++;
 				return;
 			}
-			add(parent.right, newNode);
+			add(newNode, parent.right);
 		}
 
 		if (parent.left == null) {
@@ -76,12 +79,21 @@ public class BlackRedTree<K,V> {
 	public void print() {
 		System.out.println("Size of the tree: "+ size);
 		Node<K,V> current = this.root;
-		while (current !=  null) {
-			System.out.println(current);
-			if (current.left != null) current = current.left;
-			if (current.right != null) current  = current.right;
-			if (current.right == null && current.left == null) current = null;
+		print(current);
+	}
+
+	private void print(Node<K,V> node) {
+		if (node.right == null) {
+			System.out.println(node);
+			return;
 		}
+		print(node.right);
+
+		if (node.left == null) {
+			System.out.println(node);
+			return;
+		}
+		print(node.left);
 	}
 
 	public static void main(String[] args) {
