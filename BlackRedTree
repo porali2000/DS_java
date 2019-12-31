@@ -1,6 +1,6 @@
 public class BlackRedTree<K,V> {
 
-	public Node parent;
+	public Node root;
 	public int size = 0;
 
 	public class Node<K,V> {
@@ -13,21 +13,73 @@ public class BlackRedTree<K,V> {
 			this.key = key;
 			this.value = value;
 		}
+
+		@Override
+		public String toString() {
+			return "Node{" +
+					"key=" + key +
+					", value=" + value +
+					", parent=" + parent +
+					", left=" + left +
+					", right=" + right +
+					", isBlack=" + isBlack +
+					", isLeft=" + isLeft +
+					'}';
+		}
 	}
 
 	public void add(K key, V value) {
-		Node n = new Node(key, value);
-		if (null == parent) {
-			n.isBlack = true;
-			this.parent = n;
+		Node newNode = new Node(key, value);
+		if (null == root) {
+			newNode.isBlack = true;
+			this.root = newNode;
 			size++;
 			return ;
 		}
-		this.add(n, parent);
+		this.add(newNode, root);
 	}
 
-	public void add(Node new, Node parent){
+	public void add(Node<K,V> newNode, Node<K,V> parent) {
+		if(newNodeToRight(newNode, parent)) {
+			if (parent.right == null) {
+				parent.right = newNode;
+				newNode.parent = parent;
+				newNode.isLeft = false;
+				size++;
+				return;
+			}
+			add(parent.right, newNode);
+		}
+
+		if (parent.left == null) {
+			parent.left = newNode;
+			newNode.parent = parent;
+			newNode.isLeft = true;
+			size++;
+			return;
+		}
+		add(parent.right, newNode);
 
 	}
+
+	private boolean newNodeToRight(Node<K,V> newNode, Node<K,V> parent) {
+		return ((Comparable<K>)newNode.key).compareTo(parent.key) > 0;
+	}
+
+	public void print() {
+		Node<K,V> current = this.root;
+		while (current !=  null) {
+			System.out.println(current);
+			if (current.left != null) current = current.left;
+			if (current.right != null) current  = current.right;
+			if (current.right == null && current.left == null) current = null;
+		}
+	}
+	
+	public static void main(String[] args) {
+		BlackRedTree<Integer, Integer> tree = new BlackRedTree();
+		tree.add(3, 3);
+		tree.print();
+    }
 
 }
