@@ -1,0 +1,33 @@
+public class BlackRedTree<K,V> {
+
+	public Node parent;
+	public int size = 0;
+
+	public class Node<K,V> {
+		public K key;
+		public V value;
+		public Node<K,V> parent, left, right;
+		public boolean isBlack, isLeft;
+
+		public Node(K key, V value) {
+			this.key = key;
+			this.value = value;
+		}
+	}
+
+	public void add(K key, V value) {
+		Node n = new Node(key, value);
+		if (null == parent) {
+			n.isBlack = true;
+			this.parent = n;
+			size++;
+			return ;
+		}
+		this.add(n, parent);
+	}
+
+	public void add(Node new, Node parent){
+
+	}
+
+}
