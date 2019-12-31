@@ -39,7 +39,7 @@ public class BlackRedTree<K,V> {
 		this.add(newNode, root);
 	}
 
-	public void add(Node<K,V> newNode, Node<K,V> parent) {
+	private void add(Node<K,V> newNode, Node<K,V> parent) {
 		if(newNodeEqual(newNode, parent)) {
 			return;
 		}
@@ -61,7 +61,7 @@ public class BlackRedTree<K,V> {
 			size++;
 			return;
 		}
-		add(parent.right, newNode);
+		add(parent.left, newNode);
 
 	}
 
@@ -74,6 +74,7 @@ public class BlackRedTree<K,V> {
 	}
 
 	public void print() {
+		System.out.println("Size of the tree: "+ size);
 		Node<K,V> current = this.root;
 		while (current !=  null) {
 			System.out.println(current);
@@ -86,7 +87,7 @@ public class BlackRedTree<K,V> {
 	public static void main(String[] args) {
 		BlackRedTree<Integer, Integer> tree = new BlackRedTree();
 		tree.add(3, 3);
-		tree.add(3, 3);
+		tree.add(4, 4);
 		tree.print();
 	}
 
