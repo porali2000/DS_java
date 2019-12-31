@@ -83,17 +83,10 @@ public class BlackRedTree<K,V> {
 	}
 
 	private void print(Node<K,V> node) {
-		if (node.right == null) {
-			System.out.println(node);
-			return;
-		}
-		print(node.right);
-
-		if (node.left == null) {
-			System.out.println(node);
-			return;
-		}
+		if(node != null) System.out.println(node);
+		if (node == null || (node.left == null && node.right == null)) return;
 		print(node.left);
+		print(node.right);
 	}
 
 	public static void main(String[] args) {
