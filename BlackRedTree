@@ -40,6 +40,9 @@ public class BlackRedTree<K,V> {
 	}
 
 	public void add(Node<K,V> newNode, Node<K,V> parent) {
+		if(newNodeEqual(newNode, parent)) {
+			return;
+		}
 		if(newNodeToRight(newNode, parent)) {
 			if (parent.right == null) {
 				parent.right = newNode;
@@ -62,6 +65,10 @@ public class BlackRedTree<K,V> {
 
 	}
 
+	private boolean newNodeEqual(Node<K,V> newNode, Node<K,V> parent) {
+		return ((Comparable<K>)newNode.key).compareTo(parent.key) == 0;
+	}
+
 	private boolean newNodeToRight(Node<K,V> newNode, Node<K,V> parent) {
 		return ((Comparable<K>)newNode.key).compareTo(parent.key) > 0;
 	}
@@ -75,11 +82,12 @@ public class BlackRedTree<K,V> {
 			if (current.right == null && current.left == null) current = null;
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		BlackRedTree<Integer, Integer> tree = new BlackRedTree();
 		tree.add(3, 3);
+		tree.add(3, 3);
 		tree.print();
-    }
+	}
 
 }
